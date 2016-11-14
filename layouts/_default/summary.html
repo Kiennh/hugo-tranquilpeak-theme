@@ -1,17 +1,17 @@
 {{ if .Site.Params.thumbnail_image }}
   {{ if .Params.thumbnailimage }}
-    {{ .Scratch.Set "thumbnailImage" (.Params.thumbnailimage | absURL) }}
+    {{ .Scratch.Set "thumbnailImage" (replace (.Params.thumbnailimage | absURL) "http://tinhbotngheviet.com" ( printf "%s/media/140" .Site.BaseURL ))}}
   {{ else }}
     {{ if or .Params.autothumbnailimage (and .Site.Params.auto_thumbnail_image (ne .Params.autothumbnailimage false)) }}
       {{ if .Params.gallery }}
         {{ range first 1 .Params.gallery }}
           {{ range first 1 (split . " ") }}
-            {{ $.Scratch.Set "thumbnailImage" (. | absURL) }}
+            {{ $.Scratch.Set "thumbnailImage" (replace (. | absURL)     "http://tinhbotngheviet.com" ( printf "%s/media/300" .Site.BaseURL ) ) }}
           {{ end }}
         {{ end }}
       {{ else }}
         {{ if .Params.coverimage }}
-          {{ .Scratch.Set "thumbnailImage" (.Params.coverimage | absURL) }}
+          {{ .Scratch.Set "thumbnailImage"  replace (   (.Params.coverimage | absURL)   "http://tinhbotngheviet.com" ( printf "%s/media/300" .Site.BaseURL ) )  }}
         {{ end }}
       {{ end }}
     {{ end }}
@@ -43,7 +43,7 @@
       <p>
         {{ printf "%s" .Summary | markdownify }}
         <br>
-        <a href="{{ .Permalink }}" class="postShorten-excerpt_link link">Continue reading</a>
+        <a href="{{ .Permalink }}" class="postShorten-excerpt_link link">Đọc tiếp...</a>
         {{ with .Params.readingtime }}
           <span class="postShorten-readingtime">
             {{ printf " - %s min read" . }}

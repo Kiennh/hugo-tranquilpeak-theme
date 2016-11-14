@@ -32,7 +32,7 @@
     <!-- open graph data -->
     <meta name="description" content="{{ if .Description }}{{ .Description }}{{ else if .IsPage }}{{ .Summary }}{{ else }}{{ .Site.Params.description }}{{ end }}">
     <meta property="og:description" content="{{ if .Description }}{{ .Description }}{{ else if .IsPage }}{{ .Summary }}{{ else }}{{ .Site.Params.description }}{{ end }}">
-    <meta property="og:type" content="blog">
+    <meta property="og:type" content="article">
     <meta property="og:title" content="{{ with .Title }}{{ . }}{{ else }}{{ .Site.Title }}{{ end }}">
     <meta property="og:url" content="{{ .URL }}">
     <meta property="og:site_name" content="{{ .Site.Title }}">
@@ -61,13 +61,22 @@
 
     {{ with .Params.thumbnailImage }}
       <meta property="og:image" content="{{ . | absURL }}">
+      {{ if $.Site.Params.swiftype_install_key }}
+        <meta class="swiftype" name="image" data-type="enum" content="{{ . | absURL }}">
+      {{ end }}
     {{ end }}
     {{ with .Params.coverImage }}
       <meta property="og:image" content="{{ . | absURL }}">
+      {{ if $.Site.Params.swiftype_install_key }}
+        <meta class="swiftype" name="image" data-type="enum" content="{{ . | absURL }}">
+      {{ end }}
     {{ end }}
     {{ with .Params.gallery }}
       {{ range . }}
         <meta property="og:image" content="{{ range first 1 (split . " ") }}{{ . | absURL }}{{ end }}">
+        {{ if $.Site.Params.swiftype_install_key }}
+          <meta class="swiftype" name="image" data-type="enum" content="{{ range first 1 (split . " ") }}{{ . | absURL }}{{ end }}">
+        {{ end }}
       {{ end }}
     {{ end }}
 
@@ -76,12 +85,8 @@
     {{ end }}
 
     <!--STYLES-->
-    <link rel="stylesheet" href="/css/style-zfzvxnwixwz6qe7xv3xz1eyvlzc7cdfoxrgduk75zpqxib0hatbphiq9sddx.min.css" />
+    <link rel="stylesheet" href="/css/tranquilpeak.css" />
     <!--STYLES END-->
     
-    {{ if .Params.ga.async }}
-      {{ template "_internal/google_analytics_async.html" . }}
-    {{ else }}
-      {{ template "_internal/google_analytics.html" . }}
-    {{ end }}
+    {{ partial "google-analytics.html" . }}
   </head>

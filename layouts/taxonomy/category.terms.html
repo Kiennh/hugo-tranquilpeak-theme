@@ -2,14 +2,21 @@
   {{ $.Scratch.Set "max-level" 0 }}
   {{ range where $.Site.Pages "Type" "post" }}
     {{ $page := . }}
+
+    {{ if .Params.catname }} 
+      {{ range $index,$value := .Site.Taxonomies.catname }}
+         {{ $nxs := ( split ( string $index ) "-----" ) }}
+         {{ $.Scratch.Set (upper (index $nxs 1)) (index $nxs 0)  }}
+      {{ end }}
+    {{ end }}
     {{ if .Params.categories }}
-      {{ $categories := (apply .Params.categories "urlize" ".") }}
+      {{ $categories := (apply .Params.categories "title" ".") }}
       {{ range $index,$value := $categories }}
         {{ if gt $index ($.Scratch.Get "max-level") }}
           {{ $.Scratch.Set "max-level" $index }}
         {{ end }}
         {{ $path := (printf "%s" (delimit (first (add $index 1) $categories) " ")) }}
-        {{ $name := (printf "%s-%d" ($value | urlize) $index) }}
+        {{ $name := (printf "%s-%d" ($value ) $index) }}
         {{ $level := (printf "categories-level-%d" $index) }}
         {{ if $.Scratch.Get $name }}
           {{ $category := ($.Scratch.Get $name) }}
@@ -44,18 +51,19 @@
         <div id="categories-archives" class="main-content-wrap">
           <form id="filter-form" action="##">
             <input name="category" type="text" class="form-control input--xlarge"
-                   placeholder="Search category" autofocus="autofocus">
+                   placeholder="Tìm kiếm" autofocus="autofocus">
           </form>
           <h5 class="archive-result text-color-base text-xlarge"
-              data-message-zero="no category found"
-              data-message-one="1 cartegory found"
-              data-message-other="{n} categories found"></h5>
+              data-message-zero="không tìm thấy kết quả "
+              data-message-one="tìm thấy 1 kết quả"
+              data-message-other="tìm thấy {n} kết quả"></h5>
           <section class="boxes">
+ 
             {{ if $.Site.Params.hierarchical_categories }}
               {{ range $.Scratch.GetSortedMapValues "categories-level-0" }}
                 {{ $path := .path }}
                 <div>
-                  <a href="#posts-list-{{ .name | urlize }}" class="category-anchor" data-category="{{ .name }}" data-parent-categories="">{{ .name }}</a>
+                  <a href="#posts-list-{{ .name | urlize }}" class="category-anchor" data-category="{{ .name }}" data-parent-categories="">{{ title ( replace ( $.Scratch.Get (upper ( urlize .name ))) "-" " " ) }}</a>
                   {{ range seq ($.Scratch.Get "max-level") }}
                     {{ $index := . }}
                     {{ range $.Scratch.GetSortedMapValues (printf "categories-level-%d" $index) }}
@@ -67,7 +75,7 @@
             {{ else }}
               {{ range .Data.Terms.ByCount }}
                 <div>
-                  <a href="#posts-list-{{ .Name | urlize }}" class="category-anchor" data-category="{{ .Name }}">{{ .Name }}</a>
+                  <a href="#posts-list-{{ .Name | urlize }}" class="category-anchor" data-category="{{ .Name }}"> {{ .Name }}</a>
                 </div>
               {{ end }}
             {{ end }}
@@ -78,7 +86,7 @@
                 {{ $path := .path }}
                 <div id="posts-list-{{ .name | urlize }}" class="archive box" data-category="{{ .name }}" data-parent-categories="" style="display: block;">
                   <h4 class="archive-title text-xlarge">
-                    <a class="link-unstyled" href="{{ .name | urlize }}">{{ .name }} ({{ $.Scratch.GetSortedMapValues $path | len }})</a>
+                    <a class="link-unstyled" href="{{ .name | urlize }}"> {{ title ( replace ( $.Scratch.Get (upper ( urlize .name ))) "-" " " ) }}({{ $.Scratch.GetSortedMapValues $path | len }})</a>
                   </h4>
                   <ul class="archive-posts">
                     {{ range ($.Scratch.GetSortedMapValues $path) }}
@@ -119,6 +127,7 @@
         {{ partial "footer.html" . }}
       </div>
     </div>
+
     {{ partial "about.html" . }}
     {{ partial "cover.html" . }}
   </body>
