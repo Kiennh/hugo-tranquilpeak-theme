@@ -1,7 +1,7 @@
 #header {
     display:                     block;
     width:                       100%;
-    height:                      map-get($header, height);
+    //height:                      map-get($header, height);
     background:                  map-get($header, background);
     position:                    fixed;
     top:                         0;
@@ -21,8 +21,8 @@
     #btn-open-sidebar {
         position: absolute;
         // vertical center
-        top:      20px;
-        left:     20px;
+        top:      8px;
+        left:     15px;
         cursor:   pointer;
     }
     .header-right-picture {
@@ -60,6 +60,7 @@
         .header-title-link {
             color:       map-get($header, color);
             font-weight: normal;
+            padding-left: 40px;
 
             &:hover,
             &:active {
