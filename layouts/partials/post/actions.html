@@ -8,7 +8,7 @@
           <a class="post-action-btn btn btn--disabled">
         {{ end }}
           <i class="fa fa-angle-left"></i>
-          <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+          <span class="hide-xs hide-sm text-small icon-ml">{{ i18n "pagination.previous" }}</span>
         </a>
       </li>
       <li class="post-action">
@@ -17,7 +17,7 @@
         {{ else }}
           <a class="post-action-btn btn btn--disabled">
         {{ end }}
-          <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+          <span class="hide-xs hide-sm text-small icon-mr">{{ i18n "pagination.next" }}</span>
           <i class="fa fa-angle-right"></i>
         </a>
       </li>
@@ -52,11 +52,11 @@
       </li>
     {{ end }}
     <li class="post-action">
-      {{ if findRE "<!--\\s*[t|T][o|O][c|C]\\s*-->" .Content }}
+      <!-- <% if ((/<!--(\s*)[t|T][o|O][c|C](\s*)--\>/).test(post.content)) { %>
         <a class="post-action-btn btn btn--default" href="#table-of-contents">
-      {{ else }}
+      <%} else { %> -->
         <a class="post-action-btn btn btn--default" href="#">
-      {{ end }}
+      <!-- <% } %> -->
         <i class="fa fa-list"></i>
       </a>
     </li>

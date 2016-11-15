@@ -11,7 +11,7 @@
         {{ end }}
       {{ else }}
         {{ if .Params.coverimage }}
-          {{ .Scratch.Set "thumbnailImage"  replace (   (.Params.coverimage | absURL)   "http://tinhbotngheviet.com" ( printf "%s/media/300" .Site.BaseURL ) )  }}
+          {{ .Scratch.Set "thumbnailImage"  ( replace  (.Params.coverimage | absURL)   "http://tinhbotngheviet.com" ( printf "%s/media/300" .Site.BaseURL ) )  }}
         {{ end }}
       {{ end }}
     {{ end }}
@@ -43,7 +43,7 @@
       <p>
         {{ printf "%s" .Summary | markdownify }}
         <br>
-        <a href="{{ .Permalink }}" class="postShorten-excerpt_link link">Đọc tiếp...</a>
+        <a href="{{ .Permalink }}" class="postShorten-excerpt_link link">{{ i18n "post.read_more" }}</a>
         {{ with .Params.readingtime }}
           <span class="postShorten-readingtime">
             {{ printf " - %s min read" . }}
