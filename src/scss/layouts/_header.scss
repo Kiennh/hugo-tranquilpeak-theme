@@ -52,7 +52,9 @@
     .header-title {
         text-align:  center;
         font-size:   $font-size-base;
-        line-height: 55px;
+        line-height: 1.5 * $font-size-base;
+        height: 100%;
+        background-color: #ffffcc;
         margin:      0;
 
         .header-title-link {
