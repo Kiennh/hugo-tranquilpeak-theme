@@ -5,14 +5,14 @@
         <li class="pagination-prev">
           <a class="btn btn--default btn--small" href="{{ .Paginator.Prev.URL }}">
             <i class="fa fa-angle-left text-base icon-mr"></i>
-            <span>Trang tiếp</span>
+            <span>Trang trước </span>
           </a>
         </li>
       {{ end }}
       {{ if .Paginator.HasNext }}
         <li class="pagination-next">
           <a class="btn btn--default btn--small" href="{{ .Paginator.Next.URL }}">
-            <span>Trang trước</span>
+            <span>Trang sau </span>
             <i class="fa fa-angle-right text-base icon-ml"></i>
           </a>
         </li>
